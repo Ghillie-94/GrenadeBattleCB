@@ -4,4 +4,5 @@
 Floor::Floor(sf::Vector2f newPos)
 	:SpriteObject()
 {
+	collisionType = CollisionType::AABB;
 }

@@ -8,7 +8,13 @@ enum class PhysicsType
 };
 
 Physics::Physics()
+	:SpriteObject()
+	,hasPlayerJumped(false)
 {
+	
+	
+	
+	
 }
 
 void Physics::Update(sf::Time frameTime)
@@ -36,6 +42,9 @@ void Physics::Update(sf::Time frameTime)
 
 	case PhysicsType::SYMPLECTIC_EULER:
 	{
+		//****************************
+		// Practical Task: Physics alternatives
+		//****************************
 		// SEMI-IMPLICIT / SYMPLECTIC_EULER
 
 		velocity = velocity + acceleration * frameTime.asSeconds();
@@ -54,6 +63,10 @@ void Physics::Update(sf::Time frameTime)
 
 	case PhysicsType::VELOCITY_VERLET:
 	{
+
+		//****************************
+		// Practical Task: Physics alternatives
+		//****************************
 		// VELOCITY VERLET / LEAP FROG
 
 		// Get half frame velocity using
@@ -84,8 +97,53 @@ void Physics::Update(sf::Time frameTime)
 
 void Physics::UpdatePlayerAcceleration()
 {
+	const float GRAVITY = 500;
+	const float PLAYERACCEL = 1500;
+	const float JUMPSPEED = 2500;
+	//update acceleration
+	acceleration.x = 0;
+	acceleration.y = GRAVITY;
+
+	//Player movement 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	{
+		acceleration.x = -PLAYERACCEL;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	{
+		acceleration.x = PLAYERACCEL;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		if (!hasPlayerJumped)
+		{
+			acceleration.y = JUMPSPEED;
+			hasPlayerJumped = true;
+			jumpCooldownClock.restart();
+			JumpCooldown();
+		}
+		
+	}
+	
 }
 
 void Physics::UpdateGrenadeAcceleration()
 {
+	const float GRENADEACCEL = 5000;
+	const float GRAVITY = 500;
+	//update acceleration
+	acceleration.x = GRENADEACCEL;
+	acceleration.y = GRAVITY;
+}
+
+void Physics::JumpCooldown()
+{
+	if (hasPlayerJumped)
+	{
+		jumpCooldownTimer = jumpCooldownClock.getElapsedTime();
+		if (jumpCooldownTimer > sf::seconds(1.5f))
+		{
+			hasPlayerJumped = false;
+		}
+	}
 }

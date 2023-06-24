@@ -12,10 +12,20 @@ public:
 
     void UpdateGrenadeAcceleration();
 
+    void JumpCooldown();
+
 protected:
     sf::Vector2f velocity;
     sf::Vector2f twoFramesOldPos;
     sf::Vector2f acceleration;
+
+    bool hasPlayerJumped;
+
+private:
+    sf::Time jumpCooldownTimer;
+    sf::Clock jumpCooldownClock;
+
+    
 
 };
 

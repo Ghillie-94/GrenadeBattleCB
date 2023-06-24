@@ -4,4 +4,5 @@
 Platform::Platform(sf::Vector2f newPos)
 	:SpriteObject()
 {
+	SetPosition(newPos);
 }

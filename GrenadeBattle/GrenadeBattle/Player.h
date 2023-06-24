@@ -24,14 +24,13 @@ public:
 protected:
     int lives;
     bool hasAttacked;
-    bool hasJumped;
+    
 
 private:
     sf::Time attackCooldownTimer;
     sf::Clock attackCooldownClock;
 
-    sf::Time jumpCooldownTimer;
-    sf::Clock jumpCooldownClock;
+    
 
 };
 
