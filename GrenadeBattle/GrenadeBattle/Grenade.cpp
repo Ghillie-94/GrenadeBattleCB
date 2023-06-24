@@ -7,14 +7,26 @@ Grenade::Grenade(sf::Vector2f newPos, Player* newPlayerPtr, LevelScreen* newLeve
 	, levelPtr(newLevelPtr)
 	, isDetonating(false)
 	, playerPtr(newPlayerPtr)
+	, blastRadius()
 	
 {
 	SetPosition(newPos);
+	boomClock.restart();
+	boomTimer = boomClock.getElapsedTime();
+
+	blastRadius.width = 50;
+	blastRadius.height = 30;
 }
 
 void Grenade::Update(sf::Time frameTime)
 {
 	UpdateGrenadeAcceleration(); //todo ask sarah if i need to remove call of this function from physics update or here
+
+	if (boomTimer > sf::seconds(1.5f))
+	{
+		isDetonating = true;
+		
+	}
 }
 
 void Grenade::UpdateGrenadeAcceleration()
@@ -47,4 +59,15 @@ void Grenade::HandleCollision(SpriteObject& other)
 
 void Grenade::DamageCheck(Player& _player)
 {
+	if (isDetonating)
+	{
+		if (blastRadius.intersects(_player.GetAABB()))
+		{
+			playerPtr = &_player;
+			playerPtr->ChangeLives(1);
+			levelPtr->ResetPlay();
+		}
+	}
 }
+
+
