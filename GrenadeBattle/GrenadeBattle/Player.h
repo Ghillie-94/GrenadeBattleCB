@@ -9,26 +9,39 @@ class Player :
 {
 public:
 
-    Player(LevelScreen* newLevelScreenPtr);
+    Player(LevelScreen* newLevelScreenPtr, int newPlayerIndex);
 
     void Update(sf::Time frameTime) override;
     void HandleCollision(SpriteObject& other) override;
 
-    void SetCanAttack(bool newCanAttack);
+    void SetHasAttacked(bool newHasAttacked);
     void AttackCooldown();
     void LaunchGrenade();
 
     void ChangeLives(int minusLife);
     void SetLives(int newLives);
 
+    void UpdateAim();
+    
+
+    sf::Vector2f GetAim();
+
+    int GetPlayerIndex();
+
 protected:
     int lives;
     bool hasAttacked;
+
     
 
 private:
     sf::Time attackCooldownTimer;
     sf::Clock attackCooldownClock;
+    LevelScreen* levelScreenPtr;
+    sf::Vector2f aim;
+    int playerIndex;
+
+    
 
     
 

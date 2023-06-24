@@ -3,15 +3,18 @@
 
 //forward declaration for player pointer
 class Player;
+class LevelScreen;
 
 class Grenade :
     public Physics
 {
 public:
 
-    Grenade(Player* newPlayerPtr);
+    Grenade(sf::Vector2f newPos, Player* newPlayerPtr, LevelScreen* newLevelPtr);
 
     void Update(sf::Time frameTime) override;
+
+    void UpdateGrenadeAcceleration() override;
 
     void HandleCollision(SpriteObject& other) override;
 
@@ -23,6 +26,8 @@ private:
     sf::Time boomTimer;
     sf::Clock boomClock;
     Player* playerPtr;
+    LevelScreen* levelPtr;
+    
 
 };
 

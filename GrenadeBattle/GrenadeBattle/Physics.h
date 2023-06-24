@@ -10,7 +10,7 @@ public:
 
     void UpdatePlayerAcceleration();
 
-    void UpdateGrenadeAcceleration();
+    virtual void UpdateGrenadeAcceleration();
 
     void JumpCooldown();
 

@@ -129,11 +129,14 @@ void Physics::UpdatePlayerAcceleration()
 
 void Physics::UpdateGrenadeAcceleration()
 {
+	/*
 	const float GRENADEACCEL = 5000;
 	const float GRAVITY = 500;
 	//update acceleration
-	acceleration.x = GRENADEACCEL;
+	acceleration.x = GRENADEACCEL; //todo add aim vector
 	acceleration.y = GRAVITY;
+	*/
+	//handled in child
 }
 
 void Physics::JumpCooldown()

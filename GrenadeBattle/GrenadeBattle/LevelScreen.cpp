@@ -6,8 +6,8 @@
 
 LevelScreen::LevelScreen(Game* newGamePointer)
 	:Screen(newGamePointer)
-	,player1(this)
-	,player2(this)
+	,player1(this, 1)
+	,player2(this, 2)
 	,endPanel(newGamePointer->GetWindow())
 	,platforms()
 	,grenades()
@@ -18,6 +18,7 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	,player1LivesText()
 	,player2LivesText()
 	,floor(sf::Vector2f(0,0))
+	
 {
 }
 
@@ -33,9 +34,22 @@ void LevelScreen::TriggerEndState(bool win, std::string _winner)
 {
 }
 
-void LevelScreen::AddGrenade()
+void LevelScreen::AddGrenade(std::string playerWhoLaunched)
 {
+	sf::Vector2f spawnPoint;
+	if (playerWhoLaunched == "player1")
+	{
+		spawnPoint = player1.GetPosition();
+		grenades.push_back(new Grenade(spawnPoint, &player1, this));
+	}
+	if (playerWhoLaunched == "player2")
+	{
+		spawnPoint = player2.GetPosition();
+		grenades.push_back(new Grenade(spawnPoint, &player2, this));
+	}
 }
+
+
 
 void LevelScreen::Restart()
 {

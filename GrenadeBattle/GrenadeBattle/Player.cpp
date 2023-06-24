@@ -1,27 +1,53 @@
 #include "Player.h"
+#include "LevelScreen.h"
+#include "VectorHelper.h"
 
-Player::Player(LevelScreen* newLevelScreenPtr)
+Player::Player(LevelScreen* newLevelScreenPtr, int newPlayerIndex)
+	:Physics()
+	,lives()
+	,hasAttacked(false)
+	,attackCooldownTimer()
+	,attackCooldownClock()
+	,levelScreenPtr(newLevelScreenPtr)
+	,aim(GetPosition())
+	,playerIndex(newPlayerIndex)
 {
+	aim.x = aim.x - 20;
+	
 }
 
 void Player::Update(sf::Time frameTime)
 {
+	
 }
 
 void Player::HandleCollision(SpriteObject& other)
 {
 }
 
-void Player::SetCanAttack(bool newCanAttack)
+void Player::SetHasAttacked(bool newCanAttack)
 {
+	hasAttacked = newCanAttack;
 }
 
 void Player::AttackCooldown()
 {
+	if (hasAttacked)
+	{
+		attackCooldownTimer = attackCooldownClock.getElapsedTime();
+		if (attackCooldownTimer > sf::seconds(1.5f))
+		{
+			SetHasAttacked(false);
+		}
+	}
 }
 
 void Player::LaunchGrenade()
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+	{
+		levelScreenPtr->AddGrenade("player1");
+	}
 }
 
 void Player::ChangeLives(int minusLife)
@@ -32,4 +58,46 @@ void Player::ChangeLives(int minusLife)
 void Player::SetLives(int newLives)
 {
 	lives = newLives;
+}
+
+void Player::UpdateAim()
+{
+	sf::Vector2f direction = (aim - GetPosition());
+	direction = VectorHelper::Normalise(direction);
+	float angle = atan(direction.y / direction.x);
+
+	//player one input
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && playerIndex == 1)
+	{
+		angle = +10;
+		
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && playerIndex == 1)
+	{
+		angle = -10;
+	}
+
+	//player two input
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && playerIndex == 2)
+	{
+		angle = +10;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && playerIndex == 2)
+	{
+		angle = -10;
+	}
+	aim.x = cos(angle);
+	aim.y = sin(angle);
+}
+
+
+
+sf::Vector2f Player::GetAim()
+{
+	return aim;
+}
+
+int Player::GetPlayerIndex()
+{
+	return playerIndex;
 }

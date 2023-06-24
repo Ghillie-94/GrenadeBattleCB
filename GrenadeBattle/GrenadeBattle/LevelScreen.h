@@ -26,7 +26,9 @@ public:
 
     void TriggerEndState(bool win, std::string _winner);
 
-    void AddGrenade();
+    void AddGrenade(std::string playerWhoLaunched);
+
+    
 
 private:
     void Restart();
@@ -48,5 +50,6 @@ private:
     sf::Text player1LivesText;
     sf::Text player2LivesText;
     Floor floor;
+    
 };
 
