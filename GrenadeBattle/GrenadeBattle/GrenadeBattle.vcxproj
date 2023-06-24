@@ -139,6 +139,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="SpriteObject.cpp" />
   </ItemGroup>
@@ -148,6 +149,7 @@
     <ClInclude Include="EndPanel.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="Platform.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="SpriteObject.h" />
   </ItemGroup>
