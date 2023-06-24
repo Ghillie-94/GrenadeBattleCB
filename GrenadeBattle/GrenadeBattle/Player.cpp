@@ -24,6 +24,12 @@ void Player::LaunchGrenade()
 {
 }
 
-void Player::SetLives(int minusLife)
+void Player::ChangeLives(int minusLife)
 {
+	lives = -minusLife;
+}
+
+void Player::SetLives(int newLives)
+{
+	lives = newLives;
 }

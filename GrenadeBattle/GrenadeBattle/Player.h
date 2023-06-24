@@ -18,7 +18,8 @@ public:
     void AttackCooldown();
     void LaunchGrenade();
 
-    void SetLives(int minusLife);
+    void ChangeLives(int minusLife);
+    void SetLives(int newLives);
 
 protected:
     int lives;
