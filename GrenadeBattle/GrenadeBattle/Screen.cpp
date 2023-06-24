@@ -1,6 +1,7 @@
 #include "Screen.h"
 
 Screen::Screen(Game* newGamePtr)
+	: gamePtr(newGamePtr)
 {
 }
 
