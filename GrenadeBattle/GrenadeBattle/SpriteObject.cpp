@@ -1,4 +1,6 @@
 #include "SpriteObject.h"
+#include "VectorHelper.h"
+#include <algorithm>
 
 SpriteObject::SpriteObject()
 	: sprite()
@@ -94,6 +96,9 @@ void SpriteObject::SetPosition(float newX, float newY)
 
 bool SpriteObject::CheckCollision(SpriteObject& other)
 {
+	//***************************
+	//Practical Task: Collision Geometry
+	//***************************
 	if (!alive || !other.alive)
 	{
 		return false;
@@ -163,32 +168,88 @@ bool SpriteObject::CheckCollision(SpriteObject& other)
 
 void SpriteObject::SetColliding(bool newColliding)
 {
+	colliding = newColliding;
 }
 
 sf::Vector2f SpriteObject::GetCollisionDepth(SpriteObject& other)
 {
-	return sf::Vector2f();
+	// get the two objects axis aligned bounding boxes
+	sf::FloatRect thisAABB = GetAABB();
+	sf::FloatRect otherAABB = other.GetAABB();
+
+	// get the centre points of the colliders
+	sf::Vector2f thisCentre = GetCollisionCentre();
+	sf::Vector2f otherCentre = other.GetCollisionCentre();
+
+	//set up seperation distance
+	sf::Vector2f minDistance;
+	minDistance.x = thisAABB.width * 0.5f + otherAABB.width * 0.5f;
+	minDistance.y = thisAABB.height * 0.5f + otherAABB.height * 0.5f;
+
+	//calculate distance between collider centres
+	sf::Vector2f actualDistance = otherCentre - thisCentre;
+
+	// if the distance is less than 0 then they are overlapping
+	if (actualDistance.x < 0)
+		//invert seperation distance
+		minDistance.x = -minDistance.x;
+	if (actualDistance.y < 0)
+		minDistance.y = -minDistance.y;
+	//subtract seperation from actual distance
+	return actualDistance - minDistance;
 }
 
 void SpriteObject::HandleCollision(SpriteObject& other)
 {
+	//handled in child classes
 }
 
 void SpriteObject::SetAlive(bool newAlive)
 {
+	alive = newAlive;
 }
 
 sf::FloatRect SpriteObject::GetAABB()
 {
-	return sf::FloatRect();
+	sf::FloatRect bounds = sprite.getGlobalBounds();
+	bounds.width = bounds.width * collisionScale.x;
+	bounds.height = bounds.height * collisionScale.y;
+
+	sf::Vector2f centre = GetCollisionCentre();
+
+	bounds.left = centre.x - bounds.width * 0.5f;
+	bounds.top = centre.y - bounds.height * 0.5f;
+
+	return bounds;
 }
 
 sf::Vector2f SpriteObject::GetCollisionCentre()
 {
-	return sf::Vector2f();
+	sf::Vector2f centre = position;
+
+	sf::FloatRect bounds = sprite.getGlobalBounds();
+	centre.x += bounds.width * 0.5f;
+	centre.y += bounds.height * 0.5f;
+
+	centre.x += collisionOffset.x;
+	centre.y += collisionOffset.y;
+
+	return centre;
 }
 
 float SpriteObject::GetCircleColliderRadius()
 {
-	return 0.0f;
+	sf::FloatRect bounds = sprite.getGlobalBounds();
+	bounds.width = bounds.width * collisionScale.x;
+	bounds.height = bounds.height * collisionScale.y;
+
+
+	if (bounds.width > bounds.height)
+	{
+		return bounds.width * 0.5f;
+	}
+	else
+	{
+		return bounds.height * 0.5f;
+	}
 }
