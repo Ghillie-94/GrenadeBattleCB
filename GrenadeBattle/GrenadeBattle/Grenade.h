@@ -20,6 +20,8 @@ public:
 
     void DamageCheck(Player& _player);
 
+ 
+
 private:
 
     bool isDetonating;
@@ -27,6 +29,7 @@ private:
     sf::Clock boomClock;
     Player* playerPtr;
     LevelScreen* levelPtr;
+    sf::FloatRect blastRadius;
     
 
 };
