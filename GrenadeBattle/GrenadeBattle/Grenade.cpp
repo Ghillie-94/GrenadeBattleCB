@@ -14,6 +14,7 @@ Grenade::Grenade(sf::Vector2f newPos, Player* newPlayerPtr, LevelScreen* newLeve
 
 void Grenade::Update(sf::Time frameTime)
 {
+	UpdateGrenadeAcceleration(); //todo ask sarah if i need to remove call of this function from physics update or here
 }
 
 void Grenade::UpdateGrenadeAcceleration()
