@@ -12,6 +12,10 @@ public:
 
     void UpdateGrenadeAcceleration();
 
+protected:
+    sf::Vector2f velocity;
+    sf::Vector2f twoFramesOldPos;
+    sf::Vector2f acceleration;
 
 };
 
