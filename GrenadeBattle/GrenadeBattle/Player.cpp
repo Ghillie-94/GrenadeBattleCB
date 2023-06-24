@@ -112,3 +112,19 @@ int Player::GetPlayerIndex()
 {
 	return playerIndex;
 }
+
+void Player::CheckLives()
+{
+	if (lives <= 0)
+	{
+		if (playerIndex == 1)
+		{
+			levelScreenPtr->TriggerEndState(true, "player1");
+		}
+		if (playerIndex == 2)
+		{
+			levelScreenPtr->TriggerEndState(true, "player2");
+		}
+		
+	}
+}

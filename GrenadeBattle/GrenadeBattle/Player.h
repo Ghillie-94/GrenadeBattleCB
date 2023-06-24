@@ -28,6 +28,8 @@ public:
 
     int GetPlayerIndex();
 
+    void CheckLives();
+
 protected:
     int lives;
     bool hasAttacked;
