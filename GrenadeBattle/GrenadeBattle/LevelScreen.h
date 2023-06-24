@@ -28,12 +28,13 @@ public:
 
     void AddGrenade(std::string playerWhoLaunched);
 
+    void ResetPlay();
     
 
 private:
     void Restart();
 
-    void ResetPlay();
+    
 
     Player player1;
     Player player2;
