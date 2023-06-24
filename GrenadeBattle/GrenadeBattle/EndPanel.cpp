@@ -1,6 +1,15 @@
 #include "EndPanel.h"
+#include "AssetManager.h"
+#include "Easing.h"
 
-EndPanel::EndPanel(sf::RenderWindow& newWindow)
+EndPanel::EndPanel(sf::RenderWindow* newWindow)
+	:background()
+	, title()
+	, message()
+	, position(0, 0)
+	, window(newWindow)
+	, animatingIn(false)
+	, animationClock()
 {
 }
 

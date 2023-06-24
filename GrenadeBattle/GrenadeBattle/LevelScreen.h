@@ -31,5 +31,20 @@ private:
     void Restart();
 
     void ResetPlay();
+
+    Player player1;
+    Player player2;
+    EndPanel endPanel;
+
+    std::vector<Platform*> platforms;
+    std::vector<Grenade*> grenades;
+
+    bool gameRunning;
+    sf::View camera;
+
+    int player1Lives;
+    int player2Lives;
+    sf::Text player1LivesText;
+    sf::Text player2LivesText;
 };
 

@@ -5,7 +5,7 @@
 class EndPanel
 {
 public:
-	EndPanel(sf::RenderWindow& newWindow);
+	EndPanel(sf::RenderWindow* newWindow);
 
 	void Update(sf::Time frameTime);
 	void Draw(sf::RenderTarget& target);
