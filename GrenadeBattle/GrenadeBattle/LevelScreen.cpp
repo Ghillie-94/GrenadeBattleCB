@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "Platform.h"
 #include "Grenade.h"
+#include <iostream>
 
 LevelScreen::LevelScreen(Game* newGamePointer)
 	:Screen(newGamePointer)
@@ -41,11 +42,13 @@ void LevelScreen::AddGrenade(std::string playerWhoLaunched)
 	{
 		spawnPoint = player1.GetPosition();
 		grenades.push_back(new Grenade(spawnPoint, &player1, this));
+		std::cout << "player1 successfully launched a grenade!" << std::endl;
 	}
 	if (playerWhoLaunched == "player2")
 	{
 		spawnPoint = player2.GetPosition();
 		grenades.push_back(new Grenade(spawnPoint, &player2, this));
+		std::cout << "player2 successfully launched a grenade!" << std::endl;
 	}
 }
 
