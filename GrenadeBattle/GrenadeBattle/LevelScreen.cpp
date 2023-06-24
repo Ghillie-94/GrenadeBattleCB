@@ -33,6 +33,16 @@ void LevelScreen::Draw(sf::RenderTarget& target)
 
 void LevelScreen::TriggerEndState(bool win, std::string _winner)
 {
+	if (_winner == "player1")
+	{
+		endPanel.SetWinner("Player 1 Wins!");
+		endPanel.StartAnimation();
+	}
+	else if (_winner == "player2")
+	{
+		endPanel.SetWinner("Player 2 Wins!");
+		endPanel.StartAnimation();
+	}
 }
 
 void LevelScreen::AddGrenade(std::string playerWhoLaunched)
