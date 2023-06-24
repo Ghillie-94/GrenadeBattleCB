@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "LevelScreen.h"
 #include "VectorHelper.h"
+#include <iostream>
 
 Player::Player(LevelScreen* newLevelScreenPtr, int newPlayerIndex)
 	:Physics()
@@ -18,7 +19,10 @@ Player::Player(LevelScreen* newLevelScreenPtr, int newPlayerIndex)
 
 void Player::Update(sf::Time frameTime)
 {
-	
+	UpdateAim();
+	LaunchGrenade();
+	AttackCooldown();
+	GetAim();
 }
 
 void Player::HandleCollision(SpriteObject& other)
@@ -46,7 +50,14 @@ void Player::LaunchGrenade()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
 	{
+		std::cout << "player1 attempted to launch a grenade" << std::endl;
 		levelScreenPtr->AddGrenade("player1");
+
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
+	{
+		std::cout << "player2 attempted to launch a grenade" << std::endl;
+		levelScreenPtr->AddGrenade("player2");
 	}
 }
 
