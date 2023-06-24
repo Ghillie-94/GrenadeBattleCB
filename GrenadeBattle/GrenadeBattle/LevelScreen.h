@@ -4,6 +4,7 @@
 #include "AssetManager.h"
 #include "Player.h"
 #include "EndPanel.h"
+#include "Floor.h"
 
 
 
@@ -46,5 +47,6 @@ private:
     int player2Lives;
     sf::Text player1LivesText;
     sf::Text player2LivesText;
+    Floor floor;
 };
 

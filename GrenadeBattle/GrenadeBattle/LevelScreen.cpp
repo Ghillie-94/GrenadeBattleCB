@@ -17,6 +17,7 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	,player2Lives()
 	,player1LivesText()
 	,player2LivesText()
+	,floor(sf::Vector2f(0,0))
 {
 }
 
@@ -59,10 +60,20 @@ void LevelScreen::Restart()
 	player2.SetLives(3);
 
 	//reset positions
-	player1.SetPosition(30, 1000);
-	player2.SetPosition(800, 1000);
+	player1.SetPosition(30, 1079);
+	player2.SetPosition(800, 1079);
 
-
+	platforms.push_back(new Platform(sf::Vector2f(96, 1000)));
+	platforms.push_back(new Platform(sf::Vector2f(112, 1000)));
+	platforms.push_back(new Platform(sf::Vector2f(208, 950)));
+	platforms.push_back(new Platform(sf::Vector2f(224, 950)));
+	platforms.push_back(new Platform(sf::Vector2f(352, 900)));
+	platforms.push_back(new Platform(sf::Vector2f(368, 900)));
+	platforms.push_back(new Platform(sf::Vector2f(496, 950)));
+	platforms.push_back(new Platform(sf::Vector2f(512, 950)));
+	platforms.push_back(new Platform(sf::Vector2f(640, 1000)));
+	platforms.push_back(new Platform(sf::Vector2f(656, 1000)));
+	floor.SetPosition(0, 1080);
 	
 }
 
