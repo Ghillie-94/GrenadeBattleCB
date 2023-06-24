@@ -17,6 +17,8 @@ public:
 
 	void SetWinner(std::string newWinner);
 
+	std::string GetWinner();
+
 protected:
 	std::string winner;
 
