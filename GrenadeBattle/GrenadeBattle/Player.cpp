@@ -5,13 +5,14 @@
 
 Player::Player(LevelScreen* newLevelScreenPtr, int newPlayerIndex)
 	:Physics()
-	,lives()
-	,hasAttacked(false)
-	,attackCooldownTimer()
-	,attackCooldownClock()
-	,levelScreenPtr(newLevelScreenPtr)
-	,aim(GetPosition())
-	,playerIndex(newPlayerIndex)
+	, lives()
+	, hasAttacked(false)
+	, attackCooldownTimer()
+	, attackCooldownClock()
+	, levelScreenPtr(newLevelScreenPtr)
+	, aim(GetPosition())
+	, playerIndex(newPlayerIndex)
+	, launcher()
 {
 	if (playerIndex == 2)
 	{
@@ -22,7 +23,11 @@ Player::Player(LevelScreen* newLevelScreenPtr, int newPlayerIndex)
 		aim.x = aim.x + 20;
 	}
 	
-	
+	sprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/player_1_stand.png"));
+	launcher.setTexture(AssetManager::RequestTexture("Assets/Graphics/launcher.png"));
+	launcher.setPosition(GetAim());
+
+	collisionType = CollisionType::AABB;
 }
 
 void Player::Update(sf::Time frameTime)
@@ -134,6 +139,7 @@ void Player::UpdateAim()
 	}
 	aim.x = cos(angle);
 	aim.y = sin(angle);
+	launcher.rotate(angle);
 }
 
 

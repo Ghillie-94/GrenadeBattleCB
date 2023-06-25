@@ -10,6 +10,7 @@ Grenade::Grenade(sf::Vector2f newPos, Player* newPlayerPtr, LevelScreen* newLeve
 	, blastRadius()
 	
 {
+	sprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/grenade.png"));
 	SetPosition(newPos);
 	boomClock.restart();
 	boomTimer = boomClock.getElapsedTime();

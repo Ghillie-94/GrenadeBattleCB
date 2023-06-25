@@ -42,6 +42,7 @@ private:
     LevelScreen* levelScreenPtr;
     sf::Vector2f aim;
     int playerIndex;
+    sf::Sprite launcher;
 
     
 
