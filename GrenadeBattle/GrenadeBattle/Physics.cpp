@@ -100,6 +100,7 @@ void Physics::UpdatePlayerAcceleration()
 	const float GRAVITY = 500;
 	const float PLAYERACCEL = 1500;
 	const float JUMPSPEED = 2500;
+	
 	//update acceleration
 	acceleration.x = 0;
 	acceleration.y = GRAVITY;

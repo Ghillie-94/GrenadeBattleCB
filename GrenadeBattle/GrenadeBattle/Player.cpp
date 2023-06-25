@@ -20,13 +20,40 @@ Player::Player(LevelScreen* newLevelScreenPtr, int newPlayerIndex)
 void Player::Update(sf::Time frameTime)
 {
 	UpdateAim();
+	GetAim();
 	LaunchGrenade();
 	AttackCooldown();
-	GetAim();
+	Physics::UpdatePlayerAcceleration();
 }
 
 void Player::HandleCollision(SpriteObject& other)
 {
+	sf::Vector2f depth = GetCollisionDepth(other);
+	sf::Vector2f newPos = GetPosition();
+
+	if (abs(depth.x) < abs(depth.y))
+	{
+		// Move in X direction
+		newPos.x += depth.x;
+		velocity.x = 0;
+		acceleration.x = 0;
+	}
+	else
+	{
+		// Move in y direction
+		newPos.y += depth.y;
+		velocity.y = 0;
+		acceleration.y = 0;
+
+		// If we collided from above
+		if (depth.y < 0)
+		{
+			velocity.y = 0;
+			acceleration.y = 0;
+		}
+	}
+
+	SetPosition(newPos);
 }
 
 void Player::SetHasAttacked(bool newCanAttack)
