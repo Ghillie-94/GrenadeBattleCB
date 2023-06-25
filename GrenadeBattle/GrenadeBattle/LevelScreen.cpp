@@ -27,7 +27,18 @@ void LevelScreen::Update(sf::Time frameTime)
 {
 	if (gameRunning)
 	{
+		
+		player1.Update(frameTime);
+		player2.Update(frameTime);
 
+		for (int i = 0; i < grenades.size(); ++i)
+		{
+			grenades[i]->Update(frameTime);
+		}
+	}
+	else
+	{
+		endPanel.Update(frameTime);
 	}
 }
 
@@ -137,6 +148,8 @@ void LevelScreen::Restart()
 	platforms.push_back(new Platform(sf::Vector2f(656, 1000)));
 	floor.SetPosition(0, 1080);
 	
+
+	//todo set gameRunning to true
 }
 
 void LevelScreen::ResetPlay()
