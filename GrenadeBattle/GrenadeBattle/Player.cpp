@@ -7,6 +7,7 @@ Player::Player(LevelScreen* newLevelScreenPtr, int newPlayerIndex)
 	:Physics()
 	, lives()
 	, hasAttacked(false)
+	, hasJumped(false)
 	, attackCooldownTimer()
 	, attackCooldownClock()
 	, levelScreenPtr(newLevelScreenPtr)
@@ -57,10 +58,10 @@ void Player::UpdatePlayerAcceleration()
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && playerIndex == 1)
 	{
-		if (!hasPlayerJumped)
+		if (!hasJumped)
 		{
 			acceleration.y = -JUMPSPEED;
-			hasPlayerJumped = true;
+			SetHasJumped(true);
 			jumpCooldownClock.restart();
 			JumpCooldown();
 		}
@@ -238,12 +239,17 @@ void Player::SetSprite()
 
 void Player::JumpCooldown()
 {
-	if (hasPlayerJumped)
+	if (hasJumped)
 	{
 		jumpCooldownTimer = jumpCooldownClock.getElapsedTime();
 		if (jumpCooldownTimer > sf::seconds(1.5f))
 		{
-			hasPlayerJumped = false;
+			SetHasJumped(false);
 		}
 	}
+}
+
+void Player::SetHasJumped(bool newHasJumped)
+{
+	hasJumped = newHasJumped;
 }

@@ -19,7 +19,7 @@ protected:
     sf::Vector2f twoFramesOldPos;
     sf::Vector2f acceleration;
 
-    bool hasPlayerJumped;
+    
 
 
     

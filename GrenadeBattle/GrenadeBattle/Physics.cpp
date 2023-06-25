@@ -9,7 +9,6 @@ enum class PhysicsType
 
 Physics::Physics()
 	:SpriteObject()
-	,hasPlayerJumped(false)
 {
 	
 	
@@ -98,46 +97,12 @@ void Physics::Update(sf::Time frameTime)
 
 void Physics::UpdatePlayerAcceleration()
 {
-	/*const float GRAVITY = 500;
-	const float PLAYERACCEL = 1500;
-	const float JUMPSPEED = 2500;
-	
-	//update acceleration
-	acceleration.x = 0;
-	acceleration.y = GRAVITY;
-
-	//Player movement 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	{
-		acceleration.x = -PLAYERACCEL;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-	{
-		acceleration.x = PLAYERACCEL;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-	{
-		if (!hasPlayerJumped)
-		{
-			acceleration.y = -JUMPSPEED;
-			hasPlayerJumped = true;
-			jumpCooldownClock.restart();
-			JumpCooldown();
-		}
-		
-	}
-	*/ //handled in child
+	 //handled in child
 }
 
 void Physics::UpdateGrenadeAcceleration()
 {
-	/*
-	const float GRENADEACCEL = 5000;
-	const float GRAVITY = 500;
-	//update acceleration
-	acceleration.x = GRENADEACCEL; //todo add aim vector
-	acceleration.y = GRAVITY;
-	*/
+	
 	//handled in child
 }
 

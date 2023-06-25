@@ -32,11 +32,12 @@ public:
     void CheckLives();
     void SetSprite();
     void JumpCooldown();
+    void SetHasJumped(bool newHasJumped);
 
 protected:
     int lives;
     bool hasAttacked;
-
+    bool hasJumped;
     
 
 private:
