@@ -23,7 +23,7 @@ void Player::Update(sf::Time frameTime)
 	GetAim();
 	LaunchGrenade();
 	AttackCooldown();
-	Physics::UpdatePlayerAcceleration();
+	Physics::Update(frameTime);
 }
 
 void Player::HandleCollision(SpriteObject& other)
