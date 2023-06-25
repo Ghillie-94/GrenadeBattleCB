@@ -22,7 +22,8 @@ void Grenade::Update(sf::Time frameTime)
 {
 	blastRadius.left = GetPosition().x;
 	blastRadius.top = GetPosition().y;
-	UpdateGrenadeAcceleration(); //todo ask sarah if i need to remove call of this function from physics update or here
+	Physics::Update(frameTime);
+	//UpdateGrenadeAcceleration(); //todo ask sarah if i need to remove call of this function from physics update or here
 
 	if (boomTimer > sf::seconds(1.5f))
 	{
