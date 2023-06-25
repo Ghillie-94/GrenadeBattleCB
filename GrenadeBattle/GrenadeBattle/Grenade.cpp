@@ -65,11 +65,23 @@ void Grenade::DamageCheck(Player& _player)
 {
 	if (isDetonating)
 	{
+		sf::Clock blastCooldown;
+		sf::Time blastTimer;
+		blastCooldown.restart();
+		blastTimer = blastCooldown.getElapsedTime();
 		if (blastRadius.intersects(_player.GetAABB()))
 		{
 			playerPtr = &_player;
 			playerPtr->ChangeLives(1);
 			levelPtr->ResetPlay();
+		}
+		else
+		{
+			if (blastTimer > sf::seconds(1.0f))
+			{
+				isDetonating = false;
+				alive = false;
+			}
 		}
 	}
 }

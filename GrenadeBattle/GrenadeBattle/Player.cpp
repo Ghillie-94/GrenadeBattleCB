@@ -17,13 +17,15 @@ Player::Player(LevelScreen* newLevelScreenPtr, int newPlayerIndex)
 	if (playerIndex == 2)
 	{
 		aim.x = aim.x - 20;
+		sprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/player_2_stand.png"));
 	}
 	if (playerIndex == 1)
 	{
 		aim.x = aim.x + 20;
+		sprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/player_1_stand.png"));
 	}
 	
-	sprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/player_1_stand.png"));
+	
 	launcher.setTexture(AssetManager::RequestTexture("Assets/Graphics/launcher.png"));
 	launcher.setPosition(GetAim());
 
