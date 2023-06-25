@@ -13,7 +13,15 @@ Player::Player(LevelScreen* newLevelScreenPtr, int newPlayerIndex)
 	,aim(GetPosition())
 	,playerIndex(newPlayerIndex)
 {
-	aim.x = aim.x - 20;
+	if (playerIndex == 2)
+	{
+		aim.x = aim.x - 20;
+	}
+	if (playerIndex == 1)
+	{
+		aim.x = aim.x + 20;
+	}
+	
 	
 }
 
