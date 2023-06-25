@@ -9,8 +9,8 @@ Game::Game()
 {
 	//Window Setup
 	window.setMouseCursorVisible(false);
-
 	currentScreen = new LevelScreen(this);
+	
 }
 
 void Game::RunGameLoop()

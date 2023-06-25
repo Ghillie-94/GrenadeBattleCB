@@ -6,4 +6,5 @@ Floor::Floor(sf::Vector2f newPos)
 {
 	sprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/floor.png"));
 	collisionType = CollisionType::AABB;
+	SetPosition(newPos);
 }

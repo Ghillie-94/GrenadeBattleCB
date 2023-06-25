@@ -14,22 +14,15 @@ Player::Player(LevelScreen* newLevelScreenPtr, int newPlayerIndex)
 	, playerIndex(newPlayerIndex)
 	, launcher()
 {
-	if (playerIndex == 2)
-	{
-		aim.x = aim.x - 20;
-		sprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/player_2_stand.png"));
-	}
-	if (playerIndex == 1)
-	{
-		aim.x = aim.x + 20;
-		sprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/player_1_stand.png"));
-	}
 	
 	
+	
+	SetSprite();
 	launcher.setTexture(AssetManager::RequestTexture("Assets/Graphics/launcher.png"));
 	launcher.setPosition(GetAim());
 
 	collisionType = CollisionType::AABB;
+	
 }
 
 void Player::Update(sf::Time frameTime)
@@ -39,6 +32,48 @@ void Player::Update(sf::Time frameTime)
 	LaunchGrenade();
 	AttackCooldown();
 	Physics::Update(frameTime);
+	launcher.setPosition(GetPosition());
+	JumpCooldown();
+}
+
+void Player::UpdatePlayerAcceleration()
+{
+	const float GRAVITY = 500;
+	const float PLAYERACCEL = 1500;
+	const float JUMPSPEED = 2500;
+
+	//update acceleration
+	acceleration.x = 0;
+	acceleration.y = GRAVITY;
+
+	//Player1 movement & jump
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && playerIndex == 1)
+	{
+		acceleration.x = -PLAYERACCEL;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && playerIndex == 1)
+	{
+		acceleration.x = PLAYERACCEL;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && playerIndex == 1)
+	{
+		if (!hasPlayerJumped)
+		{
+			acceleration.y = -JUMPSPEED;
+			hasPlayerJumped = true;
+			jumpCooldownClock.restart();
+			JumpCooldown();
+		}
+
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && playerIndex == 2)
+	{
+		acceleration.x = -PLAYERACCEL;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && playerIndex == 2)
+	{
+		acceleration.x = PLAYERACCEL;
+	}
 }
 
 void Player::HandleCollision(SpriteObject& other)
@@ -90,16 +125,29 @@ void Player::AttackCooldown()
 
 void Player::LaunchGrenade()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) && playerIndex == 1)
 	{
-		std::cout << "player1 attempted to launch a grenade" << std::endl;
-		levelScreenPtr->AddGrenade("player1");
+		if (!hasAttacked)
+		{
+			std::cout << "player1 attempted to launch a grenade" << std::endl;
+			levelScreenPtr->AddGrenade("player1");
+			SetHasAttacked(true);
+			attackCooldownClock.restart();
+			AttackCooldown();
+		}
+		
 
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
 	{
-		std::cout << "player2 attempted to launch a grenade" << std::endl;
-		levelScreenPtr->AddGrenade("player2");
+		if (!hasAttacked)
+		{
+			std::cout << "player2 attempted to launch a grenade" << std::endl;
+			levelScreenPtr->AddGrenade("player2");
+			SetHasAttacked(true);
+			attackCooldownClock.restart();
+			AttackCooldown();
+		}
 	}
 }
 
@@ -169,5 +217,33 @@ void Player::CheckLives()
 			levelScreenPtr->TriggerEndState(true, "player2");
 		}
 		
+	}
+}
+
+void Player::SetSprite()
+{
+	if (playerIndex == 2)
+	{
+		aim.x = aim.x - 20;
+		sprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/player_2.png"));
+		
+	}
+	if (playerIndex == 1)
+	{
+		aim.x = aim.x + 20;
+		sprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/player_1.png"));
+		
+	}
+}
+
+void Player::JumpCooldown()
+{
+	if (hasPlayerJumped)
+	{
+		jumpCooldownTimer = jumpCooldownClock.getElapsedTime();
+		if (jumpCooldownTimer > sf::seconds(1.5f))
+		{
+			hasPlayerJumped = false;
+		}
 	}
 }

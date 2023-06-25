@@ -18,9 +18,11 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	,player2Lives()
 	,player1LivesText()
 	,player2LivesText()
-	,floor(sf::Vector2f(0,0))
+	,floor(sf::Vector2f(0,1080))
 	
 {
+	
+	Restart();
 }
 
 void LevelScreen::Update(sf::Time frameTime)
@@ -39,6 +41,19 @@ void LevelScreen::Update(sf::Time frameTime)
 			}
 			
 		}
+		floor.Update(frameTime);
+		
+		if (player1.CheckCollision(floor))
+		{
+			player1.SetColliding(true);
+			player1.HandleCollision(floor);
+		}
+		if (player2.CheckCollision(floor))
+		{
+			player2.SetColliding(true);
+			player2.HandleCollision(floor);
+		}
+		
 	}
 	else
 	{
@@ -50,10 +65,16 @@ void LevelScreen::Draw(sf::RenderTarget& target)
 {
 	//update the camera based on the render target size 
 	camera = target.getDefaultView();
+	sf::Vector2f cameraCentre = camera.getCenter();
+	cameraCentre.x = 540;
+	cameraCentre.y = 960;
+	camera.setCenter(cameraCentre);
+	
 	
 	//update the render target to use the camera
 	target.setView(camera);
-
+	
+	
 	for (int i = 0; i < platforms.size(); ++i)
 	{
 		if (platforms[i] != nullptr)
@@ -61,8 +82,10 @@ void LevelScreen::Draw(sf::RenderTarget& target)
 			platforms[i]->Draw(target);
 		}
 	}
+
 	player1.Draw(target);
 	player2.Draw(target);
+	floor.Draw(target);
 
 	for (int i = 0; i < grenades.size(); ++i)
 	{
@@ -137,8 +160,8 @@ void LevelScreen::Restart()
 	player2.SetLives(3);
 
 	//reset positions
-	player1.SetPosition(30, 1079);
-	player2.SetPosition(800, 1079);
+	player1.SetPosition(30, 1059);
+	player2.SetPosition(800, 1059);
 
 	platforms.push_back(new Platform(sf::Vector2f(96, 1000)));
 	platforms.push_back(new Platform(sf::Vector2f(112, 1000)));
@@ -154,6 +177,7 @@ void LevelScreen::Restart()
 	
 
 	//todo set gameRunning to true
+	gameRunning = true;
 }
 
 void LevelScreen::ResetPlay()

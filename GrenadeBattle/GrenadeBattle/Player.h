@@ -12,6 +12,7 @@ public:
     Player(LevelScreen* newLevelScreenPtr, int newPlayerIndex);
 
     void Update(sf::Time frameTime) override;
+    void UpdatePlayerAcceleration() override;
     void HandleCollision(SpriteObject& other) override;
 
     void SetHasAttacked(bool newHasAttacked);
@@ -29,6 +30,8 @@ public:
     int GetPlayerIndex();
 
     void CheckLives();
+    void SetSprite();
+    void JumpCooldown();
 
 protected:
     int lives;
@@ -43,7 +46,8 @@ private:
     sf::Vector2f aim;
     int playerIndex;
     sf::Sprite launcher;
-
+    sf::Time jumpCooldownTimer;
+    sf::Clock jumpCooldownClock;
     
 
     

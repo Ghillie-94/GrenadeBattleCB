@@ -19,6 +19,7 @@ Physics::Physics()
 
 void Physics::Update(sf::Time frameTime)
 {
+	
 	const float DRAG_MULT = 5.0f;
 	const PhysicsType physics = PhysicsType::SYMPLECTIC_EULER;
 
@@ -97,7 +98,7 @@ void Physics::Update(sf::Time frameTime)
 
 void Physics::UpdatePlayerAcceleration()
 {
-	const float GRAVITY = 500;
+	/*const float GRAVITY = 500;
 	const float PLAYERACCEL = 1500;
 	const float JUMPSPEED = 2500;
 	
@@ -118,14 +119,14 @@ void Physics::UpdatePlayerAcceleration()
 	{
 		if (!hasPlayerJumped)
 		{
-			acceleration.y = JUMPSPEED;
+			acceleration.y = -JUMPSPEED;
 			hasPlayerJumped = true;
 			jumpCooldownClock.restart();
 			JumpCooldown();
 		}
 		
 	}
-	
+	*/ //handled in child
 }
 
 void Physics::UpdateGrenadeAcceleration()
@@ -140,14 +141,4 @@ void Physics::UpdateGrenadeAcceleration()
 	//handled in child
 }
 
-void Physics::JumpCooldown()
-{
-	if (hasPlayerJumped)
-	{
-		jumpCooldownTimer = jumpCooldownClock.getElapsedTime();
-		if (jumpCooldownTimer > sf::seconds(1.5f))
-		{
-			hasPlayerJumped = false;
-		}
-	}
-}
+

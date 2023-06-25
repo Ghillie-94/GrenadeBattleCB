@@ -8,11 +8,11 @@ public:
 
     virtual void Update(sf::Time frameTime) override;
 
-    void UpdatePlayerAcceleration();
+    virtual void UpdatePlayerAcceleration();
 
     virtual void UpdateGrenadeAcceleration();
 
-    void JumpCooldown();
+    
 
 protected:
     sf::Vector2f velocity;
@@ -21,9 +21,8 @@ protected:
 
     bool hasPlayerJumped;
 
-private:
-    sf::Time jumpCooldownTimer;
-    sf::Clock jumpCooldownClock;
+
+    
 
     
 
