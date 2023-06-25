@@ -33,7 +33,11 @@ void LevelScreen::Update(sf::Time frameTime)
 
 		for (int i = 0; i < grenades.size(); ++i)
 		{
-			grenades[i]->Update(frameTime);
+			if (grenades[i] != nullptr)
+			{
+				grenades[i]->Update(frameTime);
+			}
+			
 		}
 	}
 	else
