@@ -25,10 +25,44 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 
 void LevelScreen::Update(sf::Time frameTime)
 {
+	if (gameRunning)
+	{
+
+	}
 }
 
 void LevelScreen::Draw(sf::RenderTarget& target)
 {
+	//update the camera based on the render target size 
+	camera = target.getDefaultView();
+	
+	//update the render target to use the camera
+	target.setView(camera);
+
+	for (int i = 0; i < platforms.size(); ++i)
+	{
+		if (platforms[i] != nullptr)
+		{
+			platforms[i]->Draw(target);
+		}
+	}
+	player1.Draw(target);
+	player2.Draw(target);
+
+	for (int i = 0; i < grenades.size(); ++i)
+	{
+		if (grenades[i] != nullptr)
+		{
+			grenades[i]->Draw(target);
+		}
+	}
+
+	if (!gameRunning)
+	{
+		endPanel.Draw(target);
+	}
+
+
 }
 
 void LevelScreen::TriggerEndState(bool win, std::string _winner)
@@ -43,6 +77,7 @@ void LevelScreen::TriggerEndState(bool win, std::string _winner)
 		endPanel.SetWinner("Player 2 Wins!");
 		endPanel.StartAnimation();
 	}
+	gameRunning = false;
 }
 
 void LevelScreen::AddGrenade(std::string playerWhoLaunched)
