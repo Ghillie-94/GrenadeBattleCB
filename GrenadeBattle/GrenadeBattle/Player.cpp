@@ -137,19 +137,25 @@ void Player::AttackCooldown()
 
 void Player::LaunchGrenade()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) && playerIndex == 1)
+	float axisValue;
+	if (playerIndex == 1)
 	{
-		if (!hasAttacked)
+		axisValue = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Z);
+		if (axisValue < -90)
 		{
-			std::cout << "player1 attempted to launch a grenade" << std::endl;
-			levelScreenPtr->AddGrenade("player1");
-			SetHasAttacked(true);
-			attackCooldownClock.restart();
-			AttackCooldown();
+			if (!hasAttacked)
+			{
+				std::cout << "player1 attempted to launch a grenade" << std::endl;
+				levelScreenPtr->AddGrenade("player1");
+				SetHasAttacked(true);
+				attackCooldownClock.restart();
+				AttackCooldown();
+			}
+			
 		}
-		
 
 	}
+	
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
 	{
 		if (!hasAttacked)
