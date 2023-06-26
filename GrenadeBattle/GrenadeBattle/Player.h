@@ -25,7 +25,7 @@ public:
     void UpdateAim();
     
 
-    sf::Vector2f GetAim();
+    sf::Vector2f GetInitialLaunchVelocity();
 
     int GetPlayerIndex();
 
@@ -51,6 +51,8 @@ private:
     sf::Time jumpCooldownTimer;
     sf::Clock jumpCooldownClock;
     sf::Time airTime;
+    sf::Vector2f initialLaunchVelocity;
+    const float LAUNCHSPEED;
     
 
     

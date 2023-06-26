@@ -32,7 +32,6 @@ void Physics::Update(sf::Time frameTime)
 
 		// drag
 		velocity.x = velocity.x - velocity.x * DRAG_MULT * frameTime.asSeconds();
-		velocity.y = velocity.y - velocity.y * DRAG_MULT * frameTime.asSeconds();
 
 		// Update acceleration
 		UpdatePlayerAcceleration();

@@ -121,16 +121,19 @@ void LevelScreen::TriggerEndState(bool win, std::string _winner)
 void LevelScreen::AddGrenade(std::string playerWhoLaunched)
 {
 	sf::Vector2f spawnPoint;
+	sf::Vector2f initialVelocity;
 	if (playerWhoLaunched == "player1")
 	{
 		spawnPoint = player1.GetPosition();
-		grenades.push_back(new Grenade(spawnPoint, &player1, this));
+		initialVelocity = player1.GetInitialLaunchVelocity();
+		grenades.push_back(new Grenade(spawnPoint, &player1, this, initialVelocity));
 		std::cout << "player1 successfully launched a grenade!" << std::endl;
 	}
 	if (playerWhoLaunched == "player2")
 	{
 		spawnPoint = player2.GetPosition();
-		grenades.push_back(new Grenade(spawnPoint, &player2, this));
+		initialVelocity = player2.GetInitialLaunchVelocity();
+		grenades.push_back(new Grenade(spawnPoint, &player2, this, initialVelocity));
 		std::cout << "player2 successfully launched a grenade!" << std::endl;
 	}
 }

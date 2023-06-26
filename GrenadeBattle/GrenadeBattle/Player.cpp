@@ -14,13 +14,14 @@ Player::Player(LevelScreen* newLevelScreenPtr, int newPlayerIndex)
 	, aim(GetPosition())
 	, playerIndex(newPlayerIndex)
 	, launcher()
+	, LAUNCHSPEED(2000)
 {
 	
 	
 	
 	SetSprite();
 	launcher.setTexture(AssetManager::RequestTexture("Assets/Graphics/launcher.png"));
-	launcher.setPosition(GetAim());
+	launcher.setPosition(GetPosition());
 
 	collisionType = CollisionType::AABB;
 	
@@ -40,7 +41,7 @@ void Player::UpdatePlayerAcceleration()
 {
 	const float GRAVITY = 500;
 	const float PLAYERACCEL = 15;
-	const float JUMPSPEED = 2000;
+	const float JUMPSPEED = 1000;
 
 	//update acceleration
 	acceleration.x = 0;
@@ -174,34 +175,7 @@ void Player::SetLives(int newLives)
 
 void Player::UpdateAim()
 {
-	/*sf::Vector2f direction = (aim - GetPosition());
-	direction = VectorHelper::Normalise(direction);
-	float angle = atan(direction.y / direction.x);
-
-	//player one input
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && playerIndex == 1)
-	{
-		angle = +10;
-		
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && playerIndex == 1)
-	{
-		angle = -10;
-	}
-
-	//player two input
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && playerIndex == 2)
-	{
-		angle = +10;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && playerIndex == 2)
-	{
-		angle = -10;
-	}
-	aim.x = cos(angle);
-	aim.y = sin(angle);
-	launcher.rotate(angle);
-	*/
+	
 
 	//player one input
 	if (playerIndex == 1)
@@ -209,18 +183,19 @@ void Player::UpdateAim()
 		//according to SFML forums joystick axes are mapped depending on the gamepad's driver
 		//it should be U and R for the right stick on a xbox 360 pad
 		aim.x = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U);
-		aim.y = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R);
+		aim.y = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::V);
 
 		aim = VectorHelper::Normalise(aim);
+		initialLaunchVelocity = aim * LAUNCHSPEED;
 		
 	}
 }
 
 
 
-sf::Vector2f Player::GetAim()
+sf::Vector2f Player::GetInitialLaunchVelocity()
 {
-	return aim;
+	return initialLaunchVelocity;
 }
 
 int Player::GetPlayerIndex()

@@ -2,12 +2,13 @@
 #include "Player.h"
 #include "LevelScreen.h"
 
-Grenade::Grenade(sf::Vector2f newPos, Player* newPlayerPtr, LevelScreen* newLevelPtr)
+Grenade::Grenade(sf::Vector2f newPos, Player* newPlayerPtr, LevelScreen* newLevelPtr, sf::Vector2f newInitialVel)
 	:Physics()
 	, levelPtr(newLevelPtr)
 	, isDetonating(false)
 	, playerPtr(newPlayerPtr)
 	, blastRadius()
+	
 	
 {
 	sprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/grenade.png"));
@@ -17,6 +18,9 @@ Grenade::Grenade(sf::Vector2f newPos, Player* newPlayerPtr, LevelScreen* newLeve
 
 	blastRadius.width = 50;
 	blastRadius.height = 30;
+	aimDirection = newInitialVel;
+	velocity = velocity + aimDirection;
+	
 }
 
 void Grenade::Update(sf::Time frameTime)
@@ -24,7 +28,7 @@ void Grenade::Update(sf::Time frameTime)
 	blastRadius.left = GetPosition().x;
 	blastRadius.top = GetPosition().y;
 	Physics::Update(frameTime);
-	aimDirection = playerPtr->GetAim(); //move to constructor??
+	
 	//UpdateGrenadeAcceleration(); //todo ask sarah if i need to remove call of this function from physics update or here
 
 	if (boomTimer > sf::seconds(1.5f))
@@ -36,25 +40,11 @@ void Grenade::Update(sf::Time frameTime)
 
 void Grenade::UpdateGrenadeAcceleration()
 {
-	int index = playerPtr->GetPlayerIndex();
-	const float GRENADEACCEL = 2500;
-	const float GRAVITY = 500;
+	const float GRAVITY = 1000;
 	
 
-	if (index == 1)
-	{
-		
-		//update acceleration
-		acceleration.x = GRENADEACCEL; //todo add aim vector
-		acceleration.y = GRAVITY;
-	}
-	if (index == 2)
-	{
-		
-		//update acceleration
-		acceleration.x = -GRENADEACCEL; //todo add aim vector
-		acceleration.y = GRAVITY;
-	}
+	//update acceleration 
+	acceleration.y = GRAVITY;
 	
 }
 

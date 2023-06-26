@@ -10,7 +10,7 @@ class Grenade :
 {
 public:
 
-    Grenade(sf::Vector2f newPos, Player* newPlayerPtr, LevelScreen* newLevelPtr);
+    Grenade(sf::Vector2f newPos, Player* newPlayerPtr, LevelScreen* newLevelPtr, sf::Vector2f newInitialVel);
 
     void Update(sf::Time frameTime) override;
 
@@ -31,6 +31,7 @@ private:
     LevelScreen* levelPtr;
     sf::FloatRect blastRadius;
     sf::Vector2f aimDirection;
+    
     
 
 };
