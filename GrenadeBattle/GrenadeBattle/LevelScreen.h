@@ -24,7 +24,7 @@ public:
     void Update(sf::Time frameTime) override;
     void Draw(sf::RenderTarget& target) override;
 
-    void TriggerEndState(bool win, std::string _winner);
+    void TriggerEndState(bool win, std::string _loser);
 
     void AddGrenade(std::string playerWhoLaunched);
 

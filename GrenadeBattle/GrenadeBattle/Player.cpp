@@ -27,7 +27,11 @@ Player::Player(LevelScreen* newLevelScreenPtr, int newPlayerIndex)
 
 	collisionType = CollisionType::AABB;
 	pip.setTexture(AssetManager::RequestTexture("Assets/Graphics/pip.png"));
-	pips.push_back(new sf::Sprite(pip)); /*1*/ pips.push_back(new sf::Sprite(pip)); /*2*/ pips.push_back(new sf::Sprite(pip)); /*3*/ pips.push_back(new sf::Sprite(pip)); /*4*/ pips.push_back(new sf::Sprite(pip)); /*5*/ pips.push_back(new sf::Sprite(pip)); /*6*/ pips.push_back(new sf::Sprite(pip)); /*7*/ pips.push_back(new sf::Sprite(pip)); /*8*/ pips.push_back(new sf::Sprite(pip)); /*9*/ pips.push_back(new sf::Sprite(pip)); /*10*/
+	for (int i = 0; i < 10; ++i)
+	{
+		pips.push_back(new sf::Sprite(pip));
+	}
+	
 	
 }
 
@@ -40,6 +44,7 @@ void Player::Update(sf::Time frameTime)
 	launcher.setPosition(GetPosition());
 	JumpCooldown();
 	UpdatePips();
+	CheckLives();
 }
 
 void Player::Draw(sf::RenderTarget& target)
@@ -133,6 +138,9 @@ void Player::HandleCollision(SpriteObject& other)
 
 void Player::UpdatePips()
 {
+	//*************************************
+	//Practical Task - Gravity Prediction
+	//*************************************
 	float timeStep = 0;
 	sf::Vector2f iV;
 	sf::Vector2f iP;
@@ -212,7 +220,7 @@ void Player::LaunchGrenade()
 
 void Player::ChangeLives(int minusLife)
 {
-	lives = -minusLife;
+	lives -= minusLife;
 }
 
 void Player::SetLives(int newLives)
@@ -325,6 +333,9 @@ void Player::SetHasJumped(bool newHasJumped)
 
 sf::Vector2f Player::ProjectilePrediction(float newTime, sf::Vector2f newIV, sf::Vector2f newIP, sf::Vector2f gravity)
 {
+	//*************************************
+	//Practical Task - Gravity Prediction
+	//*************************************
 	
 	return gravity* (0.5f * newTime * newTime) + (newIV * newTime) + newIP;
 

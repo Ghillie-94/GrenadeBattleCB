@@ -18,7 +18,7 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	,player2Lives()
 	,player1LivesText()
 	,player2LivesText()
-	,floor(sf::Vector2f(0,1080))
+	,floor(sf::Vector2f(0,620))
 	
 {
 	
@@ -38,6 +38,9 @@ void LevelScreen::Update(sf::Time frameTime)
 			if (grenades[i] != nullptr)
 			{
 				grenades[i]->Update(frameTime);
+				grenades[i]->DamageCheck(player1);
+				grenades[i]->DamageCheck(player2);
+
 			}
 			
 		}
@@ -58,6 +61,10 @@ void LevelScreen::Update(sf::Time frameTime)
 	else
 	{
 		endPanel.Update(frameTime);
+		if (sf::Joystick::isButtonPressed(0, 7) || sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+		{
+			Restart();
+		}
 	}
 }
 
@@ -93,6 +100,8 @@ void LevelScreen::Draw(sf::RenderTarget& target)
 		if (grenades[i] != nullptr)
 		{
 			grenades[i]->Draw(target);
+			grenades[i]->DamageCheck(player1);
+			grenades[i]->DamageCheck(player2);
 		}
 	}
 
@@ -104,16 +113,16 @@ void LevelScreen::Draw(sf::RenderTarget& target)
 
 }
 
-void LevelScreen::TriggerEndState(bool win, std::string _winner)
+void LevelScreen::TriggerEndState(bool win, std::string _loser)
 {
-	if (_winner == "player1")
-	{
-		endPanel.SetWinner("Player 1 Wins!");
-		endPanel.StartAnimation();
-	}
-	else if (_winner == "player2")
+	if (_loser == "player1")
 	{
 		endPanel.SetWinner("Player 2 Wins!");
+		endPanel.StartAnimation();
+	}
+	else if (_loser == "player2")
+	{
+		endPanel.SetWinner("Player 1 Wins!");
 		endPanel.StartAnimation();
 	}
 	gameRunning = false;
@@ -194,6 +203,6 @@ void LevelScreen::ResetPlay()
 	}
 	grenades.clear();
 
-	player1.SetPosition(30, 1000);
-	player2.SetPosition(800, 1000);
+	player1.SetPosition(30, 580);
+	player2.SetPosition(800, 580);
 }

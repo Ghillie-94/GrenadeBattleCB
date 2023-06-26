@@ -14,12 +14,12 @@ EndPanel::EndPanel(sf::RenderWindow* newWindow)
 	background.setTexture(AssetManager::RequestTexture("insertgraphicforpanelhere"));
 	background.setScale(5.0f, 5.0f);
 
-	title.setFont(AssetManager::RequestFont("InsertFonthere"));
+	title.setFont(AssetManager::RequestFont("Assets/Fonts/dogica.ttf"));
 	title.setCharacterSize(70);
 	title.setFillColor(sf::Color::White);
 	
 
-	message.setFont(AssetManager::RequestFont("InsertFonthere"));
+	message.setFont(AssetManager::RequestFont("Assets/Fonts/dogica.ttf"));
 	message.setCharacterSize(30);
 	message.setString("Restart");
 	message.setFillColor(sf::Color::White);

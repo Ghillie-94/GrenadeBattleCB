@@ -22,14 +22,20 @@ public:
 
     void DamageCheck(Player& _player);
 
+    void SetDetonation(bool newDetonation);
+
+protected:
+
+    bool isDetonating;
  
 
 private:
 
-    bool isDetonating;
+    
     sf::Time boomTimer;
     sf::Clock boomClock;
     Player* playerPtr;
+    Player* otherPlayerPtr;
     LevelScreen* levelPtr;
     sf::FloatRect blastRadius;
     sf::Vector2f aimDirection;

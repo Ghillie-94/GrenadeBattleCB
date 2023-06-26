@@ -1,23 +1,26 @@
 #include "Grenade.h"
 #include "Player.h"
 #include "LevelScreen.h"
+#include <iostream>
 
 Grenade::Grenade(sf::Vector2f newPos, Player* newPlayerPtr, LevelScreen* newLevelPtr, sf::Vector2f newInitialVel)
 	:Physics(false)
 	, levelPtr(newLevelPtr)
 	, isDetonating(false)
 	, playerPtr(newPlayerPtr)
+	, otherPlayerPtr(nullptr)
 	, blastRadius()
+	
 	
 	
 {
 	sprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/grenade.png"));
 	SetPosition(newPos);
 	boomClock.restart();
-	boomTimer = boomClock.getElapsedTime();
+	
 
-	blastRadius.width = 50;
-	blastRadius.height = 30;
+	blastRadius.width = 120;
+	blastRadius.height = 60;
 	aimDirection = newInitialVel;
 	velocity = velocity + aimDirection;
 	
@@ -29,13 +32,14 @@ void Grenade::Update(sf::Time frameTime)
 	blastRadius.top = GetPosition().y;
 	Physics::Update(frameTime);
 	
-	
+	boomTimer = boomClock.getElapsedTime();
 
 	if (boomTimer > sf::seconds(1.5f))
 	{
-		isDetonating = true;
-		
+		SetDetonation(true);
 	}
+	
+	
 }
 
 void Grenade::Draw(sf::RenderTarget& target)
@@ -67,19 +71,23 @@ void Grenade::DamageCheck(Player& _player)
 		blastTimer = blastCooldown.getElapsedTime();
 		if (blastRadius.intersects(_player.GetAABB()))
 		{
-			playerPtr = &_player;
-			playerPtr->ChangeLives(1);
+			otherPlayerPtr = &_player;
+			otherPlayerPtr->ChangeLives(1);
 			levelPtr->ResetPlay();
 		}
-		else
+		if (blastTimer > sf::seconds(1.0f))
 		{
-			if (blastTimer > sf::seconds(1.0f))
-			{
-				isDetonating = false;
-				alive = false;
-			}
+			SetDetonation(false);
+			alive = false;
 		}
 	}
+	
+}
+
+void Grenade::SetDetonation(bool newDetonation)
+{
+	isDetonating = newDetonation;
+	std::cout << "Grenade Detonated" << std::endl;
 }
 
 
