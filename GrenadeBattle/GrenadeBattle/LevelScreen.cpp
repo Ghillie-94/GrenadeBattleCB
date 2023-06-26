@@ -40,12 +40,28 @@ void LevelScreen::Update(sf::Time frameTime)
 				grenades[i]->Update(frameTime);
 				grenades[i]->DamageCheck(player1);
 				grenades[i]->DamageCheck(player2);
+				if (floor.CheckCollision(*grenades[i]))
+				{
+					grenades[i]->HandleCollision(floor);
+				}
 
 			}
 			
 		}
+
+		
 		floor.Update(frameTime);
 		
+		for (int i = 0; i < platforms.size(); ++i)
+		{
+			for (int j = 0; j < grenades.size(); ++j)
+			{
+				if (platforms[i]->CheckCollision(*grenades[j]))
+				{
+					grenades[j]->HandleCollision(*platforms[i]);
+				}
+			}
+		}
 		if (player1.CheckCollision(floor))
 		{
 			player1.SetColliding(true);
@@ -100,8 +116,6 @@ void LevelScreen::Draw(sf::RenderTarget& target)
 		if (grenades[i] != nullptr)
 		{
 			grenades[i]->Draw(target);
-			grenades[i]->DamageCheck(player1);
-			grenades[i]->DamageCheck(player2);
 		}
 	}
 

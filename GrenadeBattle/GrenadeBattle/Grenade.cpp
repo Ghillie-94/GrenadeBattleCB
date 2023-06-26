@@ -1,6 +1,7 @@
 #include "Grenade.h"
 #include "Player.h"
 #include "LevelScreen.h"
+#include "VectorHelper.h"
 #include <iostream>
 
 Grenade::Grenade(sf::Vector2f newPos, Player* newPlayerPtr, LevelScreen* newLevelPtr, sf::Vector2f newInitialVel)
@@ -59,6 +60,47 @@ void Grenade::UpdateGrenadeAcceleration()
 
 void Grenade::HandleCollision(SpriteObject& other)
 {
+	sf::Vector2f depth = GetCollisionDepth(other);
+	sf::Vector2f newPos = GetPosition();
+	sf::Vector2f calcVector;
+	sf::Vector2f calcVector2;
+	sf::Vector2f normal;
+	sf::Vector2f reflect;
+	
+	if (abs(depth.x) < abs(depth.y))
+	{
+		calcVector.x = other.GetAABB().left;
+		calcVector.y = other.GetAABB().top;
+		calcVector2.x = other.GetAABB().left;
+		calcVector.y = other.GetAABB().top + other.GetAABB().height;
+		normal = calcVector - calcVector2;
+		normal = VectorHelper::Normalise(normal);
+		reflect = VectorHelper::Reflect(velocity, normal);
+		velocity = reflect;
+
+	}
+	else
+	{
+		// Move in y direction
+		newPos.y += depth.y;
+		velocity.y = 0;
+		acceleration.y = 0;
+
+		// If we collided from above
+		if (depth.y < 0)
+		{
+			calcVector.x = other.GetAABB().left;
+			calcVector.y = other.GetAABB().top;
+			calcVector2.x = other.GetAABB().left + other.GetAABB().width;
+			calcVector.y = other.GetAABB().top;
+			normal = calcVector - calcVector2;
+			normal = VectorHelper::Normalise(normal);
+			reflect = VectorHelper::Reflect(velocity, normal);
+			velocity = reflect;
+		}
+	}
+
+	SetPosition(newPos);
 }
 
 void Grenade::DamageCheck(Player& _player)
