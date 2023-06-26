@@ -4,7 +4,7 @@
 #include <iostream>
 
 Player::Player(LevelScreen* newLevelScreenPtr, int newPlayerIndex)
-	:Physics()
+	:Physics(true)
 	, lives()
 	, hasAttacked(false)
 	, hasJumped(false)
@@ -14,7 +14,9 @@ Player::Player(LevelScreen* newLevelScreenPtr, int newPlayerIndex)
 	, aim(GetPosition())
 	, playerIndex(newPlayerIndex)
 	, launcher()
-	, LAUNCHSPEED(2000)
+	, LAUNCHSPEED(1000)
+	, pip()
+	, pips()
 {
 	
 	
@@ -24,6 +26,8 @@ Player::Player(LevelScreen* newLevelScreenPtr, int newPlayerIndex)
 	launcher.setPosition(GetPosition());
 
 	collisionType = CollisionType::AABB;
+	pip.setTexture(AssetManager::RequestTexture("Assets/Graphics/pip.png"));
+	pips.push_back(new sf::Sprite(pip)); /*1*/ pips.push_back(new sf::Sprite(pip)); /*2*/ pips.push_back(new sf::Sprite(pip)); /*3*/ pips.push_back(new sf::Sprite(pip)); /*4*/ pips.push_back(new sf::Sprite(pip)); /*5*/ pips.push_back(new sf::Sprite(pip)); /*6*/ pips.push_back(new sf::Sprite(pip)); /*7*/ pips.push_back(new sf::Sprite(pip)); /*8*/ pips.push_back(new sf::Sprite(pip)); /*9*/ pips.push_back(new sf::Sprite(pip)); /*10*/
 	
 }
 
@@ -35,6 +39,17 @@ void Player::Update(sf::Time frameTime)
 	Physics::Update(frameTime);
 	launcher.setPosition(GetPosition());
 	JumpCooldown();
+	UpdatePips();
+}
+
+void Player::Draw(sf::RenderTarget& target)
+{
+	SpriteObject::Draw(target);
+	
+	for (int i = 0; i < pips.size(); ++i)
+	{
+		target.draw(*pips[i]);
+	}
 }
 
 void Player::UpdatePlayerAcceleration()
@@ -116,6 +131,27 @@ void Player::HandleCollision(SpriteObject& other)
 	}
 
 	SetPosition(newPos);
+}
+
+void Player::UpdatePips()
+{
+	float timeStep = 0;
+	sf::Vector2f iV;
+	sf::Vector2f iP;
+	sf::Vector2f g;
+	iV = GetInitialLaunchVelocity();
+	iP = GetPosition();
+	g.y = 1000;
+	sf::Vector2f newPipPos;
+	for (int i = 0; i < pips.size(); ++i)
+	{
+		timeStep += 0.1f;
+		newPipPos = ProjectilePrediction(timeStep, iV, iP, g);
+		pips[i]->setPosition(newPipPos);
+		
+	}
+
+	
 }
 
 void Player::SetHasAttacked(bool newCanAttack)
@@ -269,4 +305,11 @@ void Player::JumpCooldown()
 void Player::SetHasJumped(bool newHasJumped)
 {
 	hasJumped = newHasJumped;
+}
+
+sf::Vector2f Player::ProjectilePrediction(float newTime, sf::Vector2f newIV, sf::Vector2f newIP, sf::Vector2f gravity)
+{
+	
+	return gravity* (0.5f * newTime * newTime) + (newIV * newTime) + newIP;
+
 }

@@ -4,9 +4,11 @@ class Physics :
     public SpriteObject
 {
 public:
-    Physics();
+    Physics(bool newDragOn);
 
     virtual void Update(sf::Time frameTime) override;
+
+    virtual void Draw(sf::RenderTarget& target) override;
 
     virtual void UpdatePlayerAcceleration();
 
@@ -18,6 +20,7 @@ protected:
     sf::Vector2f velocity;
     sf::Vector2f twoFramesOldPos;
     sf::Vector2f acceleration;
+    bool dragOn;
 
     
 

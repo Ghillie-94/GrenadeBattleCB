@@ -3,7 +3,7 @@
 #include "LevelScreen.h"
 
 Grenade::Grenade(sf::Vector2f newPos, Player* newPlayerPtr, LevelScreen* newLevelPtr, sf::Vector2f newInitialVel)
-	:Physics()
+	:Physics(false)
 	, levelPtr(newLevelPtr)
 	, isDetonating(false)
 	, playerPtr(newPlayerPtr)
@@ -29,13 +29,18 @@ void Grenade::Update(sf::Time frameTime)
 	blastRadius.top = GetPosition().y;
 	Physics::Update(frameTime);
 	
-	//UpdateGrenadeAcceleration(); //todo ask sarah if i need to remove call of this function from physics update or here
+	
 
 	if (boomTimer > sf::seconds(1.5f))
 	{
 		isDetonating = true;
 		
 	}
+}
+
+void Grenade::Draw(sf::RenderTarget& target)
+{
+	SpriteObject::Draw(target);
 }
 
 void Grenade::UpdateGrenadeAcceleration()

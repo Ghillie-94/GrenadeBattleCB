@@ -7,8 +7,9 @@ enum class PhysicsType
 	VELOCITY_VERLET,
 };
 
-Physics::Physics()
+Physics::Physics(bool newDragOn)
 	:SpriteObject()
+	, dragOn(newDragOn)
 {
 	
 	
@@ -48,8 +49,12 @@ void Physics::Update(sf::Time frameTime)
 
 		velocity = velocity + acceleration * frameTime.asSeconds();
 
-		// drag
-		velocity = velocity - velocity * DRAG_MULT * frameTime.asSeconds();
+		if (dragOn)
+		{
+			// drag
+			velocity = velocity - velocity * DRAG_MULT * frameTime.asSeconds();
+		}
+		
 
 		SetPosition(GetPosition() + velocity * frameTime.asSeconds());
 
@@ -92,6 +97,11 @@ void Physics::Update(sf::Time frameTime)
 		break;
 	}
 
+}
+
+void Physics::Draw(sf::RenderTarget& target)
+{
+	//handled in child
 }
 
 void Physics::UpdatePlayerAcceleration()

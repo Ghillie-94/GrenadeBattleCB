@@ -72,7 +72,7 @@ void LevelScreen::Draw(sf::RenderTarget& target)
 	
 	
 	//update the render target to use the camera
-	target.setView(camera);
+	//target.setView(camera);
 	
 	
 	for (int i = 0; i < platforms.size(); ++i)
@@ -83,6 +83,7 @@ void LevelScreen::Draw(sf::RenderTarget& target)
 		}
 	}
 
+	
 	player1.Draw(target);
 	player2.Draw(target);
 	floor.Draw(target);
@@ -163,20 +164,20 @@ void LevelScreen::Restart()
 	player2.SetLives(3);
 
 	//reset positions
-	player1.SetPosition(30, 1059);
-	player2.SetPosition(800, 1059);
+	player1.SetPosition(30, 580);
+	player2.SetPosition(800, 580);
 
-	platforms.push_back(new Platform(sf::Vector2f(96, 1000)));
-	platforms.push_back(new Platform(sf::Vector2f(112, 1000)));
-	platforms.push_back(new Platform(sf::Vector2f(208, 950)));
-	platforms.push_back(new Platform(sf::Vector2f(224, 950)));
-	platforms.push_back(new Platform(sf::Vector2f(352, 900)));
-	platforms.push_back(new Platform(sf::Vector2f(368, 900)));
-	platforms.push_back(new Platform(sf::Vector2f(496, 950)));
-	platforms.push_back(new Platform(sf::Vector2f(512, 950)));
-	platforms.push_back(new Platform(sf::Vector2f(640, 1000)));
-	platforms.push_back(new Platform(sf::Vector2f(656, 1000)));
-	floor.SetPosition(0, 1080);
+	platforms.push_back(new Platform(sf::Vector2f(96, 460)));
+	platforms.push_back(new Platform(sf::Vector2f(112, 460)));
+	platforms.push_back(new Platform(sf::Vector2f(208, 500)));
+	platforms.push_back(new Platform(sf::Vector2f(224, 500)));
+	platforms.push_back(new Platform(sf::Vector2f(352, 540)));
+	platforms.push_back(new Platform(sf::Vector2f(368, 540)));
+	platforms.push_back(new Platform(sf::Vector2f(496, 500)));
+	platforms.push_back(new Platform(sf::Vector2f(512, 500)));
+	platforms.push_back(new Platform(sf::Vector2f(640, 460)));
+	platforms.push_back(new Platform(sf::Vector2f(656, 460)));
+	floor.SetPosition(0, 620);
 	
 
 	//todo set gameRunning to true
