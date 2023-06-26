@@ -38,6 +38,7 @@ protected:
     int lives;
     bool hasAttacked;
     bool hasJumped;
+    bool isAirTime;
     
 
 private:
@@ -49,6 +50,7 @@ private:
     sf::Sprite launcher;
     sf::Time jumpCooldownTimer;
     sf::Clock jumpCooldownClock;
+    sf::Time airTime;
     
 
     

@@ -32,7 +32,7 @@ void LevelScreen::Update(sf::Time frameTime)
 		
 		player1.Update(frameTime);
 		player2.Update(frameTime);
-
+		
 		for (int i = 0; i < grenades.size(); ++i)
 		{
 			if (grenades[i] != nullptr)

@@ -30,6 +30,7 @@ private:
     Player* playerPtr;
     LevelScreen* levelPtr;
     sf::FloatRect blastRadius;
+    sf::Vector2f aimDirection;
     
 
 };

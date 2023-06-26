@@ -29,7 +29,6 @@ Player::Player(LevelScreen* newLevelScreenPtr, int newPlayerIndex)
 void Player::Update(sf::Time frameTime)
 {
 	UpdateAim();
-	GetAim();
 	LaunchGrenade();
 	AttackCooldown();
 	Physics::Update(frameTime);
@@ -40,26 +39,37 @@ void Player::Update(sf::Time frameTime)
 void Player::UpdatePlayerAcceleration()
 {
 	const float GRAVITY = 500;
-	const float PLAYERACCEL = 1500;
-	const float JUMPSPEED = 2500;
+	const float PLAYERACCEL = 15;
+	const float JUMPSPEED = 2000;
 
 	//update acceleration
 	acceleration.x = 0;
 	acceleration.y = GRAVITY;
 
 	//Player1 movement & jump
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && playerIndex == 1)
+	if (playerIndex == 1)
 	{
-		acceleration.x = -PLAYERACCEL;
+		float leftJoystickInput = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X);
+		acceleration.x = PLAYERACCEL * leftJoystickInput;
+
+		if (sf::Joystick::isButtonPressed(0, 0) == true)
+		{
+			if (!hasJumped)
+			{
+				acceleration.y = -JUMPSPEED;
+				//SetHasJumped(true); //add airtime
+				jumpCooldownClock.restart();
+				isAirTime = true;
+				JumpCooldown();
+			}
+		}
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && playerIndex == 1)
-	{
-		acceleration.x = PLAYERACCEL;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && playerIndex == 1)
+	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && playerIndex == 2)
 	{
 		if (!hasJumped)
 		{
+			
 			acceleration.y = -JUMPSPEED;
 			SetHasJumped(true);
 			jumpCooldownClock.restart();
@@ -69,11 +79,11 @@ void Player::UpdatePlayerAcceleration()
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && playerIndex == 2)
 	{
-		acceleration.x = -PLAYERACCEL;
+		acceleration.x = -PLAYERACCEL*100;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && playerIndex == 2)
 	{
-		acceleration.x = PLAYERACCEL;
+		acceleration.x = PLAYERACCEL*100;
 	}
 }
 
@@ -164,7 +174,7 @@ void Player::SetLives(int newLives)
 
 void Player::UpdateAim()
 {
-	sf::Vector2f direction = (aim - GetPosition());
+	/*sf::Vector2f direction = (aim - GetPosition());
 	direction = VectorHelper::Normalise(direction);
 	float angle = atan(direction.y / direction.x);
 
@@ -191,6 +201,19 @@ void Player::UpdateAim()
 	aim.x = cos(angle);
 	aim.y = sin(angle);
 	launcher.rotate(angle);
+	*/
+
+	//player one input
+	if (playerIndex == 1)
+	{
+		//according to SFML forums joystick axes are mapped depending on the gamepad's driver
+		//it should be U and R for the right stick on a xbox 360 pad
+		aim.x = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U);
+		aim.y = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R);
+
+		aim = VectorHelper::Normalise(aim);
+		
+	}
 }
 
 
@@ -239,13 +262,26 @@ void Player::SetSprite()
 
 void Player::JumpCooldown()
 {
-	if (hasJumped)
+	if (isAirTime)
 	{
-		jumpCooldownTimer = jumpCooldownClock.getElapsedTime();
-		if (jumpCooldownTimer > sf::seconds(1.5f))
+		airTime = jumpCooldownClock.getElapsedTime();
+		
+
+		if (airTime > sf::seconds(1))
 		{
-			SetHasJumped(false);
+			isAirTime = false;
+			SetHasJumped(true);
 		}
+		
+		
+	}
+	
+	
+	jumpCooldownClock.restart();
+	jumpCooldownTimer = jumpCooldownClock.getElapsedTime();
+	if (jumpCooldownTimer > sf::seconds(1.5f))
+	{
+		SetHasJumped(false);
 	}
 }
 

@@ -24,6 +24,7 @@ void Grenade::Update(sf::Time frameTime)
 	blastRadius.left = GetPosition().x;
 	blastRadius.top = GetPosition().y;
 	Physics::Update(frameTime);
+	aimDirection = playerPtr->GetAim(); //move to constructor??
 	//UpdateGrenadeAcceleration(); //todo ask sarah if i need to remove call of this function from physics update or here
 
 	if (boomTimer > sf::seconds(1.5f))
@@ -36,23 +37,23 @@ void Grenade::Update(sf::Time frameTime)
 void Grenade::UpdateGrenadeAcceleration()
 {
 	int index = playerPtr->GetPlayerIndex();
-	const float GRENADEACCEL = 5000;
+	const float GRENADEACCEL = 2500;
 	const float GRAVITY = 500;
 	
 
 	if (index == 1)
 	{
-		sf::Vector2f aimDirection = playerPtr->GetAim();
+		
 		//update acceleration
-		acceleration.x = GRENADEACCEL * aimDirection.x; //todo add aim vector
-		acceleration.y = GRAVITY * aimDirection.y;
+		acceleration.x = GRENADEACCEL; //todo add aim vector
+		acceleration.y = GRAVITY;
 	}
 	if (index == 2)
 	{
-		sf::Vector2f aimDirection = playerPtr->GetAim();
+		
 		//update acceleration
-		acceleration.x = -GRENADEACCEL * aimDirection.x; //todo add aim vector
-		acceleration.y = GRAVITY * aimDirection.y;
+		acceleration.x = -GRENADEACCEL; //todo add aim vector
+		acceleration.y = GRAVITY;
 	}
 	
 }
