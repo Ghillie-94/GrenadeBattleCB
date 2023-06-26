@@ -81,25 +81,23 @@ void Player::UpdatePlayerAcceleration()
 		}
 	}
 	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && playerIndex == 2)
+	//Player2 movement & jump
+	if (playerIndex == 2)
 	{
-		if (!hasJumped)
-		{
-			
-			acceleration.y = -JUMPSPEED;
-			SetHasJumped(true);
-			jumpCooldownClock.restart();
-			JumpCooldown();
-		}
+		float leftJoystickInput = sf::Joystick::getAxisPosition(1, sf::Joystick::Axis::X);
+		acceleration.x = PLAYERACCEL * leftJoystickInput;
 
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && playerIndex == 2)
-	{
-		acceleration.x = -PLAYERACCEL*100;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && playerIndex == 2)
-	{
-		acceleration.x = PLAYERACCEL*100;
+		if (sf::Joystick::isButtonPressed(1, 0) == true)
+		{
+			if (!hasJumped)
+			{
+				acceleration.y = -JUMPSPEED;
+				//SetHasJumped(true); //add airtime
+				jumpCooldownClock.restart();
+				isAirTime = true;
+				JumpCooldown();
+			}
+		}
 	}
 }
 
@@ -191,18 +189,25 @@ void Player::LaunchGrenade()
 		}
 
 	}
-	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
+	if (playerIndex == 2)
 	{
-		if (!hasAttacked)
+		axisValue = sf::Joystick::getAxisPosition(1, sf::Joystick::Axis::Z);
+		if (axisValue < -90)
 		{
-			std::cout << "player2 attempted to launch a grenade" << std::endl;
-			levelScreenPtr->AddGrenade("player2");
-			SetHasAttacked(true);
-			attackCooldownClock.restart();
-			AttackCooldown();
+			if (!hasAttacked)
+			{
+				std::cout << "player2 attempted to launch a grenade" << std::endl;
+				levelScreenPtr->AddGrenade("player2");
+				SetHasAttacked(true);
+				attackCooldownClock.restart();
+				AttackCooldown();
+			}
+
 		}
+
 	}
+	
+	
 }
 
 void Player::ChangeLives(int minusLife)
@@ -217,8 +222,6 @@ void Player::SetLives(int newLives)
 
 void Player::UpdateAim()
 {
-	
-
 	//player one input
 	if (playerIndex == 1)
 	{
@@ -230,6 +233,19 @@ void Player::UpdateAim()
 		aim = VectorHelper::Normalise(aim);
 		initialLaunchVelocity = aim * LAUNCHSPEED;
 		
+	}
+
+	//player two input
+	if (playerIndex == 2)
+	{
+		//according to SFML forums joystick axes are mapped depending on the gamepad's driver
+		//it should be U and R for the right stick on a xbox 360 pad
+		aim.x = sf::Joystick::getAxisPosition(1, sf::Joystick::Axis::U);
+		aim.y = sf::Joystick::getAxisPosition(1, sf::Joystick::Axis::V);
+
+		aim = VectorHelper::Normalise(aim);
+		initialLaunchVelocity = aim * LAUNCHSPEED;
+
 	}
 }
 
