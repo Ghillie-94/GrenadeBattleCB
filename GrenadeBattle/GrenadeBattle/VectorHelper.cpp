@@ -30,6 +30,14 @@ float VectorHelper::DotProduct(float vec1X, float vec1Y, float vec2X, float vec2
 	return (vec1X * vec2X) + (vec1Y * vec2Y);
 }
 
+sf::Vector2f VectorHelper::GetNormal(sf::Vector2f line)
+{
+	sf::Vector2f normal;
+	normal = sf::Vector2f(line.y, -line.x);
+
+	return normal;
+}
+
 sf::Vector3f VectorHelper::CrossProduct3D(float vec1X, float vec1Y, float vec1Z, float vec2X, float vec2Y, float vec2Z)
 {
 	sf::Vector3f crossProduct;

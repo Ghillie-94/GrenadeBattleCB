@@ -76,11 +76,14 @@ void Grenade::HandleCollision(SpriteObject& other)
 	
 	if (abs(depth.x) < abs(depth.y))
 	{
+		// Move in x direction
+		newPos.x += depth.x * 2.0f;
 		calcVector.x = other.GetAABB().left;
 		calcVector.y = other.GetAABB().top;
 		calcVector2.x = other.GetAABB().left;
-		calcVector.y = other.GetAABB().top + other.GetAABB().height;
-		normal = calcVector - calcVector2;
+		calcVector2.y = other.GetAABB().top + other.GetAABB().height;
+		normal = calcVector2 - calcVector;
+		normal = VectorHelper::GetNormal(normal);
 		normal = VectorHelper::Normalise(normal);
 		reflect = VectorHelper::Reflect(velocity, normal);
 		velocity = reflect;
@@ -89,9 +92,9 @@ void Grenade::HandleCollision(SpriteObject& other)
 	else
 	{
 		// Move in y direction
-		newPos.y += depth.y;
-		velocity.y = 0;
-		acceleration.y = 0;
+		newPos.y += depth.y*2.0f;
+		
+		//acceleration.y = 0;
 
 		// If we collided from above
 		if (depth.y < 0)
@@ -99,8 +102,9 @@ void Grenade::HandleCollision(SpriteObject& other)
 			calcVector.x = other.GetAABB().left;
 			calcVector.y = other.GetAABB().top;
 			calcVector2.x = other.GetAABB().left + other.GetAABB().width;
-			calcVector.y = other.GetAABB().top;
-			normal = calcVector - calcVector2;
+			calcVector2.y = other.GetAABB().top;
+			normal = calcVector2 - calcVector;
+			normal = VectorHelper::GetNormal(normal);
 			normal = VectorHelper::Normalise(normal);
 			reflect = VectorHelper::Reflect(velocity, normal);
 			velocity = reflect;

@@ -8,6 +8,7 @@ namespace VectorHelper
 
 	sf::Vector2f Normalise(sf::Vector2f vec);
 	float DotProduct(float vec1X, float vec1Y, float vec2X, float vec2Y);
+	sf::Vector2f GetNormal(sf::Vector2f line);
 	sf::Vector3f CrossProduct3D(float vec1X, float vec1Y, float vec1Z, float vec2X, float vec2Y, float vec2Z);
 
 	sf::Vector2f Reflect(sf::Vector2f incoming, sf::Vector2f normal);
