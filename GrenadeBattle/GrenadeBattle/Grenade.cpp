@@ -97,18 +97,18 @@ void Grenade::HandleCollision(SpriteObject& other)
 		//acceleration.y = 0;
 
 		// If we collided from above
-		if (depth.y < 0)
-		{
-			calcVector.x = other.GetAABB().left;
-			calcVector.y = other.GetAABB().top;
-			calcVector2.x = other.GetAABB().left + other.GetAABB().width;
-			calcVector2.y = other.GetAABB().top;
-			planeLine = calcVector - calcVector2;
-			planeLine = VectorHelper::GetNormal(planeLine);
-			planeLine = VectorHelper::Normalise(planeLine);
-			reflect = VectorHelper::Reflect(velocity, planeLine);
-			velocity = reflect;
-		}
+		
+		
+		calcVector.x = other.GetAABB().left;
+		calcVector.y = other.GetAABB().top;
+		calcVector2.x = other.GetAABB().left + other.GetAABB().width;
+		calcVector2.y = other.GetAABB().top;
+		planeLine = calcVector - calcVector2;
+		planeLine = VectorHelper::GetNormal(planeLine);
+		planeLine = VectorHelper::Normalise(planeLine);
+		reflect = VectorHelper::Reflect(velocity, planeLine);
+		velocity = reflect;
+		
 	}
 
 	SetPosition(newPos);
