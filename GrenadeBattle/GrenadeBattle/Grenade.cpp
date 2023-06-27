@@ -45,7 +45,11 @@ void Grenade::Update(sf::Time frameTime)
 
 void Grenade::Draw(sf::RenderTarget& target)
 {
-	SpriteObject::Draw(target);
+	if (!nullptr)
+	{
+		SpriteObject::Draw(target);
+	}
+	
 }
 
 void Grenade::UpdateGrenadeAcceleration()
