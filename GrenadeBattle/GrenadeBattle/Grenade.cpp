@@ -119,7 +119,8 @@ void Grenade::DamageCheck(Player& _player)
 		{
 			otherPlayerPtr = &_player;
 			otherPlayerPtr->ChangeLives(1);
-			levelPtr->ResetPlay();
+			otherPlayerPtr->SetAlive(false);
+			//levelPtr->ResetPlay(); //call this in levelscreen instead if playerPtr->GetAlive() == false
 		}
 		if (blastTimer > sf::seconds(1.0f))
 		{

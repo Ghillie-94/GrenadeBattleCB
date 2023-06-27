@@ -28,6 +28,7 @@ public:
 
 	void SetAlive(bool newAlive);
 	sf::FloatRect GetAABB();
+	bool GetAlive();
 
 
 protected:

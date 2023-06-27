@@ -72,7 +72,10 @@ void LevelScreen::Update(sf::Time frameTime)
 			player2.SetColliding(true);
 			player2.HandleCollision(floor);
 		}
-		
+		if (player1.GetAlive() == false || player2.GetAlive() == false)
+		{
+			ResetPlay();
+		}
 	}
 	else
 	{
@@ -219,4 +222,6 @@ void LevelScreen::ResetPlay()
 
 	player1.SetPosition(30, 580);
 	player2.SetPosition(800, 580);
+	player1.SetAlive(true);
+	player2.SetAlive(true);
 }

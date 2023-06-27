@@ -223,6 +223,11 @@ sf::FloatRect SpriteObject::GetAABB()
 	return bounds;
 }
 
+bool SpriteObject::GetAlive()
+{
+	return alive;
+}
+
 sf::Vector2f SpriteObject::GetCollisionCentre()
 {
 	sf::Vector2f centre = position;
