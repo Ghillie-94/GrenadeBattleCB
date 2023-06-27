@@ -42,7 +42,7 @@ void EndPanel::Update(sf::Time frameTime)
 		float duration = 1.0f;
 		float time = animationClock.getElapsedTime().asSeconds();
 
-		sf::Vector2f newPosition = Easing::EaseInQuad(begin, change, duration, time);
+		sf::Vector2f newPosition = Easing::EaseOutQuad(begin, change, duration, time);
 		SetPosition(newPosition);
 
 		if (time >= duration)

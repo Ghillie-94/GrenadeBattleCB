@@ -12,5 +12,5 @@ sf::Vector2f Easing::EaseInQuad(sf::Vector2f begin, sf::Vector2f change, float d
 
 sf::Vector2f Easing::EaseOutQuad(sf::Vector2f begin, sf::Vector2f change, float duration, float time)
 {
-	return ((-change*time)/(duration*duration) + 2*(change*))
+	return ((-change * time) / (duration * duration) + 2.0f * ((change * time) / duration) + begin);
 }
