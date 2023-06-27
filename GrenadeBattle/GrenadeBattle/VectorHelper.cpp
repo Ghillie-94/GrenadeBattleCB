@@ -21,6 +21,10 @@ sf::Vector2f VectorHelper::Normalise(sf::Vector2f vec)
 	return vec;
 }
 
+//************************************
+//Practical Task - Reflection
+//************************************
+
 float VectorHelper::DotProduct(float vec1X, float vec1Y, float vec2X, float vec2Y)
 {
 	return (vec1X * vec2X) + (vec1Y * vec2Y);

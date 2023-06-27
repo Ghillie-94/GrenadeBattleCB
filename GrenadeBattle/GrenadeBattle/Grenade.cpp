@@ -64,6 +64,9 @@ void Grenade::UpdateGrenadeAcceleration()
 
 void Grenade::HandleCollision(SpriteObject& other)
 {
+	//************************************
+	//Practical Task - Reflection
+	//************************************
 	sf::Vector2f depth = GetCollisionDepth(other);
 	sf::Vector2f newPos = GetPosition();
 	sf::Vector2f calcVector;
