@@ -10,9 +10,9 @@ public:
 
     virtual void Draw(sf::RenderTarget& target) override;
 
-    virtual void UpdatePlayerAcceleration();
+    virtual void UpdateAcceleration();
 
-    virtual void UpdateGrenadeAcceleration();
+    
 
     
 

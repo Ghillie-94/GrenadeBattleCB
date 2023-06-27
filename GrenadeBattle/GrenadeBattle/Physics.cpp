@@ -31,14 +31,15 @@ void Physics::Update(sf::Time frameTime)
 		SetPosition(GetPosition() + velocity * frameTime.asSeconds());
 		velocity = velocity + acceleration * frameTime.asSeconds();
 
-		// drag
-		velocity.x = velocity.x - velocity.x * DRAG_MULT * frameTime.asSeconds();
+		if (dragOn)
+		{
+
+		}
+
 
 		// Update acceleration
-		UpdatePlayerAcceleration();
-		UpdateGrenadeAcceleration();
-	}
-	break;
+		UpdateAcceleration();
+		break;
 
 	case PhysicsType::SYMPLECTIC_EULER:
 	{
@@ -54,13 +55,12 @@ void Physics::Update(sf::Time frameTime)
 			// drag
 			velocity = velocity - velocity * DRAG_MULT * frameTime.asSeconds();
 		}
-		
+
 
 		SetPosition(GetPosition() + velocity * frameTime.asSeconds());
 
 		// Update acceleration
-		UpdatePlayerAcceleration();
-		UpdateGrenadeAcceleration();
+		UpdateAcceleration();
 	}
 	break;
 
@@ -81,22 +81,24 @@ void Physics::Update(sf::Time frameTime)
 		SetPosition(GetPosition() + halfFrameVelocity * frameTime.asSeconds());
 
 		// Update our current acceleration
-		UpdatePlayerAcceleration();
-		UpdateGrenadeAcceleration();
+		UpdateAcceleration();
 
 		// Get new frame's velocity using half frame velocity and
 		// updated acceleration
 		velocity = halfFrameVelocity + acceleration * frameTime.asSeconds() / 2.0f;
-
-		// drag
-		velocity.x = velocity.x - velocity.x * DRAG_MULT * frameTime.asSeconds();
+		if (dragOn)
+		{
+			// drag
+			velocity.x = velocity.x - velocity.x * DRAG_MULT * frameTime.asSeconds();
+		}
+		
 	}
 	break;
 
 	default:
 		break;
 	}
-
+	}
 }
 
 void Physics::Draw(sf::RenderTarget& target)
@@ -104,15 +106,11 @@ void Physics::Draw(sf::RenderTarget& target)
 	//handled in child
 }
 
-void Physics::UpdatePlayerAcceleration()
+void Physics::UpdateAcceleration()
 {
-	 //handled in child
-}
-
-void Physics::UpdateGrenadeAcceleration()
-{
-	
 	//handled in child
 }
+
+
 
 

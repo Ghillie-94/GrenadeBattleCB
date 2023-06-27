@@ -52,7 +52,7 @@ void Grenade::Draw(sf::RenderTarget& target)
 	
 }
 
-void Grenade::UpdateGrenadeAcceleration()
+void Grenade::UpdateAcceleration()
 {
 	const float GRAVITY = 1000;
 	

@@ -14,7 +14,7 @@ public:
 
     void Update(sf::Time frameTime) override;
     void Draw(sf::RenderTarget& target) override;
-    void UpdatePlayerAcceleration() override;
+    void UpdateAcceleration() override;
     void HandleCollision(SpriteObject& other) override;
     void UpdatePips();
 

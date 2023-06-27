@@ -16,7 +16,7 @@ public:
 
     void Draw(sf::RenderTarget& target);
 
-    void UpdateGrenadeAcceleration() override;
+    void UpdateAcceleration() override;
 
     void HandleCollision(SpriteObject& other) override;
 

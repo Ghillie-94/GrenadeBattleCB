@@ -57,7 +57,7 @@ void Player::Draw(sf::RenderTarget& target)
 	}
 }
 
-void Player::UpdatePlayerAcceleration()
+void Player::UpdateAcceleration()
 {
 	const float GRAVITY = 500;
 	const float PLAYERACCEL = 15;
