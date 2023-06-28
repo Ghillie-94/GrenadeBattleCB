@@ -96,7 +96,7 @@ void Grenade::HandleCollision(SpriteObject& other)
 		
 		//acceleration.y = 0;
 
-		// If we collided from above
+		
 		
 		
 		calcVector.x = other.GetAABB().left;
