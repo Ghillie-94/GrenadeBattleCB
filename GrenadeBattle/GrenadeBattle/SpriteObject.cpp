@@ -25,7 +25,7 @@ void SpriteObject::Draw(sf::RenderTarget& target)
 		return;
 	target.draw(sprite);
 
-	bool drawCollider = true;
+	bool drawCollider = false;
 
 	if (drawCollider)
 	{
