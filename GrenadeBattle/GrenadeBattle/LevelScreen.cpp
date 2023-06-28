@@ -61,6 +61,16 @@ void LevelScreen::Update(sf::Time frameTime)
 					grenades[j]->HandleCollision(*platforms[i]);
 				}
 			}
+			if (platforms[i]->CheckCollision(player1))
+			{
+				player1.HandleCollision(*platforms[i]);
+			}
+			if (platforms[i]->CheckCollision(player2))
+			{
+				player2.HandleCollision(*platforms[i]);
+			}
+			
+
 		}
 		if (player1.CheckCollision(floor))
 		{
